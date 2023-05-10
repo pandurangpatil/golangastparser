@@ -59,8 +59,8 @@ void print_node_fields(const TSTree *tree, TSNode node, int depth, const char* s
   char token[end - start + 1];
   strncpy(token, &source_code[start], end - start);
   token[end - start] = '\0';
-TSPoint startPoint = ts_node_start_point(node);
-TSPoint endPoint = ts_node_end_point(node);
+  TSPoint startPoint = ts_node_start_point(node);
+  TSPoint endPoint = ts_node_end_point(node);
 
   // Print the node's type and text
   printf("----->  <%s> line no -> %d Token -> %s\n", type, startPoint.row , token);
