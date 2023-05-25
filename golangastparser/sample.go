@@ -1,5 +1,6 @@
 package main
 
+import "C"
 import (
 	"encoding/json"
 	"fmt"
@@ -17,6 +18,20 @@ func main() {
 	p = &Person{Name: "John", Age: &age}
 	jsonstr := serilizeToJson(p)
 	fmt.Println(jsonstr)
+}
+
+//export ExternallyCalled
+func ExternallyCalled() *C.char {
+	age := 30
+	var p *Person
+	p = &Person{Name: "John", Age: &age}
+	result := serilizeToJson(p)
+	return C.CString(result)
+}
+
+//export Add
+func Add(a int, b int) int {
+	return a + b
 }
 
 func serilizeToJson(node interface{}) string {
@@ -50,3 +65,7 @@ func serilizeToJson(node interface{}) string {
 	jsonStr, _ := json.MarshalIndent(objectMap, "", "  ")
 	return string(jsonStr)
 }
+
+// build
+
+//  go build -buildmode=c-shared -o lib-sample.dylib sample.go
